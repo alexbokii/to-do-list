@@ -1,0 +1,37 @@
+<h1 class="text-danger text-center">Calendar</h1>
+<!-- <h4>{{curMonths}}, {{curYear}}</h4> -->
+
+<div class="row">
+    <div class="col-xs-3 text-info text-center text-uppercase small bg-info padding-30">
+        <h3>Today is:</h3>
+        {{curYear}}<br>
+        {{dayToday}}<br>
+        Wed
+    </div>
+    <div class="col-xs-9">
+        <h3 class="text-success text-uppercase text-center">{{curMonths}}, {{curYear}}</h3>
+        <table class="table table-bordered">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td ng-repeat="day in months" ng-click="addNote(day.num, day.note)">{{day.num}}<div class="note-dot" ng-if="day.note.length > 0"><i class="fa fa-circle dot"></i></div></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-info" ng-if="visible">
+            <h4>{{day}} of {{curMonths}}</h4>
+            <div class="notes">
+                <ul>
+                    <li ng-repeat="note in notes">{{note}}</li>
+                </ul>
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="..." ng-model="note">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="saveNote(day, curMonths, curYear, note)">Add!</button>
+              </span>
+            </div>
+        </div>
+    </div>
+</div>

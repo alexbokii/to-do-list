@@ -1,0 +1,20 @@
+.cal-days div {
+    padding: 0 5px;
+    border: 1px solid #fcfcfc;
+}
+
+div.note-dot {
+    position: relative;
+}
+
+div.note-dot i {
+    position: absolute;
+    color: green;
+    top: -26px;
+    left: 20%;
+    font-size: 10px;
+}
+
+.padding-30 {
+    padding: 30px;
+}
