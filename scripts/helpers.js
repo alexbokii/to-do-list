@@ -30,3 +30,17 @@ function checkDupes(arr) {
     var arrayWithoutDupes = _.uniq(arr);
     return arrayWithoutDupes;
 }
+
+function getWeekdayNum(day, month, year) {
+    var curDay = month + day + ", " + year;
+    var day = new Date(curDay);
+    var weekday = day.getDay();
+    return weekday;
+}
+
+function getWeekdayName(num) {
+    // console.log(num);
+    var week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    return week[num];
+}

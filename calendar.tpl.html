@@ -9,16 +9,48 @@
         Wed
     </div>
     <div class="col-xs-9">
-        <h3 class="text-success text-uppercase text-center">{{curMonths}}, {{curYear}}</h3>
-        <table class="table table-bordered">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td ng-repeat="day in months" ng-click="addNote(day.num, day.note)">{{day.num}}<div class="note-dot" ng-if="day.note.length > 0"><i class="fa fa-circle dot"></i></div></td>
-                    
-                </tr>
-            </tbody>
-        </table>
+       <div class="clearfix center-block">
+            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToPreviousMonth(curMonthsNum, curYear)"><i class="fa fa-arrow-circle-left"></i></h3>
+            <h3 class="text-success text-uppercase text-center pull-left">{{curMonths}}, {{curYear}}</h3>
+            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToNextMonth(curMonthsNum, curYear)"><i class="fa fa-arrow-circle-right"></i></h3>
+       </div>
+
+        <div class="cal">
+            <div class="day">
+                <h3>Mon</h3>
+                <h4 ng-repeat="day in months | filter:'Mon'" ng-click="addNote()">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Tue</h3>
+                <h4 ng-repeat="day in months | filter:'Tue'">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Wed</h3>
+                <h4 ng-repeat="day in months | filter:'Wed'">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Thu</h3>
+                <h4 ng-repeat="day in months | filter:'Thu'">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Fri</h3>
+                <h4 ng-repeat="day in months | filter:'Fri'">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Sat</h3>
+                <h4 ng-repeat="day in months | filter:'Sat'">{{day.day}}</h4>
+            </div>
+
+            <div class="day">
+                <h3>Sun</h3>
+                <h4 ng-repeat="day in months | filter:'Sun'">{{day.day}}</h4>
+            </div>
+        </div>
         <div class="bg-info" ng-if="visible">
             <h4>{{day}} of {{curMonths}}</h4>
             <div class="notes">

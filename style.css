@@ -18,3 +18,26 @@ div.note-dot i {
 .padding-30 {
     padding: 30px;
 }
+
+.cal {
+    width: 100%;
+}
+
+.day {
+    width: 14%;
+    float: left;
+    text-align: center;
+}
+
+.day:nth-child(even) {
+    background-color: #E8DEDE;
+}
+
+.day:nth-child(odd) {
+    background-color: #fdfdfd;
+}
+
+.arrow {
+    width: 30%;
+    cursor: pointer;
+}
