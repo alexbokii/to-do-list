@@ -6,62 +6,82 @@
         <h3>Today is:</h3>
         {{curYear}}<br>
         {{dayToday}}<br>
-        Wed
     </div>
     <div class="col-xs-9">
        <div class="clearfix center-block">
-            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToPreviousMonth(curMonthsNum, curYear)"><i class="fa fa-arrow-circle-left"></i></h3>
-            <h3 class="text-success text-uppercase text-center pull-left">{{curMonths}}, {{curYear}}</h3>
-            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToNextMonth(curMonthsNum, curYear)"><i class="fa fa-arrow-circle-right"></i></h3>
+            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToPreviousMonth(curMonthNum, curYear)"><i class="fa fa-arrow-circle-left"></i></h3>
+            <h3 class="text-success text-uppercase text-center pull-left">{{curMonthName}}, {{curYear}}</h3>
+            <h3 class="arrow text-success text-uppercase text-center pull-left" ng-click="goToNextMonth(curMonthNum, curYear)"><i class="fa fa-arrow-circle-right"></i></h3>
        </div>
 
-        <div class="cal">
+        <div class="cal clearfix">
             <div class="day">
                 <h3>Mon</h3>
-                <h4 ng-repeat="day in months | filter:'Mon'" ng-click="addNote()">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Mon'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Tue</h3>
-                <h4 ng-repeat="day in months | filter:'Tue'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Tue'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Wed</h3>
-                <h4 ng-repeat="day in months | filter:'Wed'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Wed'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Thu</h3>
-                <h4 ng-repeat="day in months | filter:'Thu'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Thu'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Fri</h3>
-                <h4 ng-repeat="day in months | filter:'Fri'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Fri'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Sat</h3>
-                <h4 ng-repeat="day in months | filter:'Sat'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Sat'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
 
             <div class="day">
                 <h3>Sun</h3>
-                <h4 ng-repeat="day in months | filter:'Sun'">{{day.day}}</h4>
+                <h4 ng-repeat="day in month | filter:'Sun'" ng-click="addNote(day.day)">
+                    {{day.day}}
+                    <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
+                </h4>
             </div>
         </div>
-        <div class="bg-info" ng-if="visible">
-            <h4>{{day}} of {{curMonths}}</h4>
+        <div class="bg-info clearfix" ng-if="visible">
+            <h4>{{addNoteToDay}} of {{curMonthName}}</h4>
             <div class="notes">
                 <ul>
-                    <li ng-repeat="note in notes">{{note}}</li>
+                    <li ng-repeat="item in month[addNoteToDay - 1].note">{{item}}</li>
                 </ul>
             </div>
             <div class="input-group">
               <input type="text" class="form-control" placeholder="..." ng-model="note">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="saveNote(day, curMonths, curYear, note)">Add!</button>
+                <button class="btn btn-default" type="button" ng-click="saveNote(addNoteToDay, curMonthName, curYear, note)">Add!</button>
               </span>
             </div>
         </div>

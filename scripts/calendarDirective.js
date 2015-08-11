@@ -1,4 +1,4 @@
-calendar.directive('myCalendar', function() {
+calendar.directive('myCalendar', function(generalService) {
     return {
         restrict: "EA",
         templateUrl: 'calendar.tpl.html',
@@ -8,124 +8,91 @@ calendar.directive('myCalendar', function() {
         link: function(scope, el, attr) {
 
             var today = new Date();
-            scope.curMonthsNum = today.getMonth();
-            scope.curMonths = getCurrentMonth(scope.curMonthsNum);
-            scope.week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
+            scope.curMonthNum = today.getMonth();
+            scope.curMonthName = generalService.getCurrentMonth(scope.curMonthNum);
             scope.curYear = today.getFullYear();
-            scope.numberOfDays = daysInMonth(scope.curMonthsNum, scope.curYear);
-            scope.dayToday = getCurrentDay(today);
+            scope.dayToday = generalService.getCurrentDay(today);
 
-            scope.months = createMonth(scope.curMonthsNum, scope.curYear);
+            scope.month = initializeMonth(scope.curMonthNum, scope.curYear);
 
+            function initializeMonth(monthNum, year) {
+                // 1. Found how many days do we have
+                var numberOfDaysInMonth = generalService.daysInMonth(monthNum, year);
+                scope.curMonthName = generalService.getCurrentMonth(monthNum);
+                scope.curMonthNum = monthNum;
+                scope.curYear = year;
+
+                // 2. Create new array with objects for each day
+                var newMonth = [];
+
+                for(var i = 0; i < numberOfDaysInMonth; i++) {
+                    var newDay = {
+                        day: i+1,
+                        month: scope.curMonthName,
+                        year: year,
+                        weekdayNum: generalService.getWeekdayNum(i+1, scope.curMonthName , year),
+                        weekdayName: generalService.getWeekdayName(generalService.getWeekdayNum(i+1, scope.curMonthName , year)),
+                        note: []
+                    };
+                    
+                    newMonth.push(newDay);
+                };
+                
+                return newMonth;
+            };
+
+            function updateViewToDoNotes() {
+                for(var i = 0; i < scope.toDoList.length; i++) {
+                    for(var j = 0; j < scope.month.length; j++) {
+                        if(scope.toDoList[i].day == scope.month[j].day &&
+                            scope.toDoList[i].month == scope.month[j].month &&
+                            scope.toDoList[i].year == scope.month[j].year) {
+                                scope.month[j].note.push(scope.toDoList[i].note); 
+                        }
+                    }
+                }
+
+                for(var i = 0; i < scope.month.length; i++) {
+                    if(scope.month[i].note.length > 0) {
+                        scope.month[i].note = generalService.checkDupes(scope.month[i].note);
+                    }
+                }
+            }
 
             // scope functions
             scope.addNote = function(day) {
                 scope.visible = true;
-                scope.day = day;
-
-                // scope.notes = notes;
+                scope.addNoteToDay = day;
             };
 
             scope.saveNote = function(day, mon, year, note) {
                 scope.visible = false;
                 scope.$emit('addNote', day, mon, year, note);
+            
+                updateViewToDoNotes();
+                
             };
 
             scope.goToPreviousMonth = function(curMonth, curYear) {
-                scope.curMonthsNum =  getPreviousMonthNum(curMonth, curYear);
-                scope.curYear = getPreviousYear(curMonth, curYear);
-                scope.curMonths = getCurrentMonth(scope.curMonthsNum);
-                console.log(scope.curMonthsNum, scope.curYear, scope.curMonths);
-                scope.numberOfDays = daysInMonth(scope.curMonthsNum, scope.curYear);
-                console.log(scope.numberOfDays);
-
-                scope.months = createMonth(scope.curMonthsNum, scope.curYear);
+                if(curMonth != 0) {
+                    scope.month = initializeMonth(curMonth - 1, curYear);
+                }
+                else {
+                    scope.month = initializeMonth(11, curYear - 1);
+                }
+                updateViewToDoNotes();
             };
 
             scope.goToNextMonth = function(curMonth, curYear) {
-                scope.curMonthsNum =  getUpcomingMonthNum(curMonth, curYear);
-                scope.curYear = getUpcomingYear(curMonth, curYear);
-                scope.curMonths = getCurrentMonth(scope.curMonthsNum);
-                console.log(scope.curMonthsNum, scope.curYear, scope.curMonths);
-                scope.numberOfDays = daysInMonth(scope.curMonthsNum, scope.curYear);
-                console.log(scope.numberOfDays);
-
-                scope.months = createMonth(scope.curMonthsNum, scope.curYear);
-            }
-
-            scope.$on('updateToDoList', function(ev, toDoObj) {
-                // scope.months = getToDoForCurMonth(toDoObj, scope.months);
-            });
-
-            
+                if(curMonth != 11) {
+                    scope.month = initializeMonth(curMonth + 1, curYear);
+                }
+                else {
+                    scope.month = initializeMonth(0, curYear + 1);
+                }
+                updateViewToDoNotes();
+            };
         }
     }
 });
 
-function getToDoForCurMonth(toDoList, months) {
-    for(var i = 0; i < months.length; i++) {
-        for(var j = 0; j < toDoList.length; j++) {
-            if(months[i].num == toDoList[j].day) {
-                months[i].note = toDoList[j].note;
-            }
-        }
-    }
-    return months;
-};
-
-function createMonth(thisMonth, year) {
-    console.log(thisMonth, year);
-    var month = getCurrentMonth(thisMonth);
-    var newMonth = [];
-    var days = daysInMonth(thisMonth, year);
-    for(var i = 0; i < days; i++) {
-        var newDay = {
-            day: i+1,
-            month: month,
-            year: year,
-            weekdayNum: getWeekdayNum(i+1, month, year),
-            weekdayName: getWeekdayName(getWeekdayNum(i+1, month, year)),
-            note: []
-        };
-        newMonth.push(newDay);
-    };
-
-    return newMonth;
-};
-
-function getPreviousMonthNum(month, year) {
-    if(month != 0) {
-        return month - 1;
-    }
-    else {
-        return 11;
-    }
-};
-
-function getPreviousYear(month, year) {
-    if(month != 0) {
-        return year;
-    }
-    else {
-        return year - 1;
-    }
-};
-
-function getUpcomingMonthNum(month, year) {
-    if(month != 11) {
-        return month + 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-function getUpcomingYear(month, year) {
-    if(month != 0) {
-        return year;
-    }
-    else {
-        return year + 1;
-    }
-};
