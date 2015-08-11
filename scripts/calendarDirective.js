@@ -14,13 +14,13 @@ calendar.directive('myCalendar', function(generalService) {
             scope.dayToday = generalService.getCurrentDay(today);
 
             scope.month = initializeMonth(scope.curMonthNum, scope.curYear);
+            addDataFromPrevAndNextMonths();
+
 
             function initializeMonth(monthNum, year) {
                 // 1. Found how many days do we have
                 var numberOfDaysInMonth = generalService.daysInMonth(monthNum, year);
-                scope.curMonthName = generalService.getCurrentMonth(monthNum);
-                scope.curMonthNum = monthNum;
-                scope.curYear = year;
+                var monthName = generalService.getCurrentMonth(monthNum);
 
                 // 2. Create new array with objects for each day
                 var newMonth = [];
@@ -28,10 +28,10 @@ calendar.directive('myCalendar', function(generalService) {
                 for(var i = 0; i < numberOfDaysInMonth; i++) {
                     var newDay = {
                         day: i+1,
-                        month: scope.curMonthName,
+                        month: monthName,
                         year: year,
-                        weekdayNum: generalService.getWeekdayNum(i+1, scope.curMonthName , year),
-                        weekdayName: generalService.getWeekdayName(generalService.getWeekdayNum(i+1, scope.curMonthName , year)),
+                        weekdayNum: generalService.getWeekdayNum(i+1, monthName , year),
+                        weekdayName: generalService.getWeekdayName(generalService.getWeekdayNum(i+1, monthName, year)),
                         note: []
                     };
                     
@@ -39,6 +39,11 @@ calendar.directive('myCalendar', function(generalService) {
                 };
                 
                 return newMonth;
+            };
+
+            function addDataFromPrevAndNextMonths() {
+                addPartOfPreviousMonth();
+                addPartOfUpcomingMonth();
             };
 
             function updateViewToDoNotes() {
@@ -59,6 +64,71 @@ calendar.directive('myCalendar', function(generalService) {
                 }
             }
 
+            function addPartOfPreviousMonth() {
+                // 1. Count how many days we should add
+                var startDayNum = scope.month[0].weekdayNum;
+                var daysFromPrevMonth;
+                var previousMonth;
+
+                if (scope.month[0].weekdayNum != 1) {
+                    daysFromPrevMonth = scope.month[0].weekdayNum - 1;
+                }
+
+                // 2. Create prev month and choose days we need
+                if(scope.curMonthNum != 0) {
+                    previousMonth = initializeMonth(scope.curMonthNum - 1, scope.curYear);
+                }
+                else {
+                    previousMonth = initializeMonth(11, scope.curYear - 1);
+                }
+                
+                // 3. Add days to month array
+                var daysFromPreviousMonthArr = [];
+                for(var i = 0; i < daysFromPrevMonth; i++) {
+                    daysFromPreviousMonthArr.push(previousMonth[previousMonth.length - (i + 1)]);
+                }
+                daysFromPreviousMonthArr = daysFromPreviousMonthArr.reverse();
+
+                for(var i = 0; i < daysFromPreviousMonthArr.length; i++) {
+                    daysFromPreviousMonthArr[i].disable = true;
+                }
+
+                // 4. Merge arrays
+                scope.month = daysFromPreviousMonthArr.concat(scope.month);
+            }
+
+            function addPartOfUpcomingMonth() {
+                // 1. Count how many days we should add
+                var endDayNum = scope.month[scope.month.length - 1].weekdayNum;
+                var daysToNextMonth;
+                var nextMonth;
+
+                if (scope.month[scope.month.length - 1].weekdayNum != 7) {
+                    daysToNextMonth = 7 - scope.month[scope.month.length - 1].weekdayNum;
+                }
+
+                // 2. Create prev month and choose days we need
+                if(scope.curMonthNum != 11) {
+                    nextMonth = initializeMonth(scope.curMonthNum + 1, scope.curYear);
+                }
+                else {
+                    nextMonth = initializeMonth(0, scope.curYear + 1);
+                }
+                
+                // 3. Add days to month array
+                var daysToNextMonthArr = [];
+                for(var i = 0; i < daysToNextMonth; i++) {
+                    daysToNextMonthArr.push(nextMonth[i]);
+                }
+
+                for(var i = 0; i < daysToNextMonthArr.length; i++) {
+                    daysToNextMonthArr[i].disable = true;
+                }
+
+                // 4. Merge arrays
+                scope.month = scope.month.concat(daysToNextMonthArr);
+            }
+
             // scope functions
             scope.addNote = function(day) {
                 scope.visible = true;
@@ -75,22 +145,36 @@ calendar.directive('myCalendar', function(generalService) {
 
             scope.goToPreviousMonth = function(curMonth, curYear) {
                 if(curMonth != 0) {
+                    scope.curMonthNum = curMonth - 1;
+                    scope.curYear = curYear;
                     scope.month = initializeMonth(curMonth - 1, curYear);
                 }
                 else {
+                    scope.curMonthNum = 11;
+                    scope.curYear = curYear - 1;
                     scope.month = initializeMonth(11, curYear - 1);
                 }
+                scope.curMonthName = generalService.getCurrentMonth(scope.curMonthNum);
+
                 updateViewToDoNotes();
+                addDataFromPrevAndNextMonths();
             };
 
             scope.goToNextMonth = function(curMonth, curYear) {
                 if(curMonth != 11) {
+                    scope.curMonthNum = curMonth + 1;
+                    scope.curYear = curYear;
                     scope.month = initializeMonth(curMonth + 1, curYear);
                 }
                 else {
+                    scope.curMonthNum = 0;
+                    scope.curYear = curYear + 1;
                     scope.month = initializeMonth(0, curYear + 1);
                 }
+                scope.curMonthName = generalService.getCurrentMonth(scope.curMonthNum);
+
                 updateViewToDoNotes();
+                addDataFromPrevAndNextMonths();
             };
         }
     }

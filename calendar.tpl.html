@@ -17,7 +17,8 @@
         <div class="cal clearfix">
             <div class="day">
                 <h3>Mon</h3>
-                <h4 ng-repeat="day in month | filter:'Mon'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Mon'" ng-click="addNote(day.day)" 
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -25,7 +26,8 @@
 
             <div class="day">
                 <h3>Tue</h3>
-                <h4 ng-repeat="day in month | filter:'Tue'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Tue'" ng-click="addNote(day.day)"
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -33,7 +35,8 @@
 
             <div class="day">
                 <h3>Wed</h3>
-                <h4 ng-repeat="day in month | filter:'Wed'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Wed'" ng-click="addNote(day.day)"
+                 ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -41,7 +44,8 @@
 
             <div class="day">
                 <h3>Thu</h3>
-                <h4 ng-repeat="day in month | filter:'Thu'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Thu'" ng-click="addNote(day.day)" 
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -49,7 +53,8 @@
 
             <div class="day">
                 <h3>Fri</h3>
-                <h4 ng-repeat="day in month | filter:'Fri'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Fri'" ng-click="addNote(day.day)" 
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -57,7 +62,8 @@
 
             <div class="day">
                 <h3>Sat</h3>
-                <h4 ng-repeat="day in month | filter:'Sat'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Sat'" ng-click="addNote(day.day)" 
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
@@ -65,7 +71,8 @@
 
             <div class="day">
                 <h3>Sun</h3>
-                <h4 ng-repeat="day in month | filter:'Sun'" ng-click="addNote(day.day)">
+                <h4 ng-repeat="day in month | filter:'Sun'" ng-click="addNote(day.day)" 
+                ng-class="{'text-muted' : day.disable == true}">
                     {{day.day}}
                     <i class="fa fa-circle" ng-if="day.note.length > 0"></i>
                 </h4>
