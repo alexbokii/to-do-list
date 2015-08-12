@@ -2,6 +2,7 @@
 <html ng-app="calendar">
 <head>
     <title>Calendar</title>
+    <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -16,7 +17,11 @@
 
 <body ng-controller="mainCalendarController">
     <div class="container">
-        <my-calendar to-do-list="toDoList"></my-calendar>
+        <div class="row">
+            <div class="col-xs-12">
+                <my-calendar to-do-list="toDoList"></my-calendar>
+            </div>
+        </div>
     </div>
 </body>
 </html>

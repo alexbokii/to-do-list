@@ -12,8 +12,10 @@ calendar.directive('myCalendar', function(generalService) {
             scope.curMonthName = generalService.getCurrentMonth(scope.curMonthNum);
             scope.curYear = today.getFullYear();
             scope.dayToday = generalService.getCurrentDay(today);
+            // scope.addNoteToDay = scope.dayToday;
 
             scope.month = initializeMonth(scope.curMonthNum, scope.curYear);
+            scope.monthWithExtraDays = scope.month;
             addDataFromPrevAndNextMonths();
 
 
@@ -97,7 +99,7 @@ calendar.directive('myCalendar', function(generalService) {
                 }
 
                 // 4. Merge arrays
-                scope.month = daysFromPreviousMonthArr.concat(scope.month);
+                scope.monthWithExtraDays = daysFromPreviousMonthArr.concat(scope.month);
             }
 
             function addPartOfUpcomingMonth() {
@@ -129,7 +131,7 @@ calendar.directive('myCalendar', function(generalService) {
                 }
 
                 // 4. Merge arrays
-                scope.month = scope.month.concat(daysToNextMonthArr);
+                scope.monthWithExtraDays = scope.monthWithExtraDays.concat(daysToNextMonthArr);
             }
 
             // scope functions
@@ -141,6 +143,7 @@ calendar.directive('myCalendar', function(generalService) {
             scope.saveNote = function(day, mon, year, note) {
                 scope.visible = false;
                 scope.$emit('addNote', day, mon, year, note);
+                scope.note = '';
             
                 updateViewToDoNotes();
                 
