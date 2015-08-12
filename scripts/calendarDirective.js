@@ -70,7 +70,10 @@ calendar.directive('myCalendar', function(generalService) {
                 var daysFromPrevMonth;
                 var previousMonth;
 
-                if (scope.month[0].weekdayNum != 1) {
+                if (scope.month[0].weekdayNum == 0) {
+                    daysFromPrevMonth = 6;
+                }
+                else if (scope.month[0].weekdayNum != 1) {
                     daysFromPrevMonth = scope.month[0].weekdayNum - 1;
                 }
 
