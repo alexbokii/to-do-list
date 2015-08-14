@@ -1,14 +1,14 @@
 <div class="row cal">
     <div class="col-xs-12 col-sm-7 shadow">
         <div class="row">
-            <div class="col-xs-12  col-sm-6 bg-default text-center">
+            <div class="col-xs-12  col-sm-6 day-area season-color text-center">
                 <h2>{{curYear}}</h2>
-                <h1 class="lg">{{dayToday}}</h1>
-                <!-- <h1 class="lg">{{addNoteToDay}}</h1> -->
+                <h1 class="lg">{{addNoteToDay}}</h1>
+                <h2>{{curMonthName}}</h2>
             </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="clearfix center-block">
-                    
+            <div class="col-xs-12 col-sm-6 month-area">
+                <div class="clearfix center-block text-center">
+                    <h5>{{curYear}}</h5>
                     <h3 class="text-center">{{curMonthName}}</h3>
                     <h3 class="arrow text-center pull-left" ng-click="goToPreviousMonth(curMonthNum, curYear)"><i class="fa fa-arrow-left"></i></h3>
                     <h3 class="arrow text-center pull-right" ng-click="goToNextMonth(curMonthNum, curYear)"><i class="fa fa-arrow-right"></i></h3>
@@ -17,73 +17,65 @@
                 <div class="clearfix">
                     <div class="day">
                         <h4>M</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Mon'" ng-click="addNote(day.day)" 
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Mon'" ng-click="day.disable || addNote(day.day)" 
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>T</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Tue'" ng-click="addNote(day.day)"
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Tue'" ng-click="day.disable || addNote(day.day)"
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>W</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Wed'" ng-click="addNote(day.day)"
-                         ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Wed'" ng-click="day.disable || addNote(day.day)"
+                         ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>T</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Thu'" ng-click="addNote(day.day)" 
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Thu'" ng-click="day.disable || addNote(day.day)" 
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                           <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>F</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Fri'" ng-click="addNote(day.day)" 
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Fri'" ng-click="day.disable || addNote(day.day)" 
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>S</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Sat'" ng-click="addNote(day.day)" 
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Sat'" ng-click="day.disable || addNote(day.day)" 
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
 
                     <div class="day">
                         <h4>S</h4>
-                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Sun'" ng-click="addNote(day.day)" 
-                        ng-class="{'text-muted' : day.disable == true}">
-                            {{day.day}}
-                            <i class="fa fa-circle note-dot" ng-if="day.note.length > 0"></i>
+                        <h4 ng-repeat="day in monthWithExtraDays | filter:'Sun'" ng-click="day.disable || addNote(day.day)" 
+                        ng-class="{'text-muted' : day.disable == true, 'underline' : day.day == dayToday}">
+                            <span class="label" ng-class="{'label-primary': day.note.length > 0}">{{day.day}}</span>
                         </h4>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" ng-show="visible">
+        <div class="row">
             <div class="">
                 <div class="clearfix">
-                    <!-- <h4>{{addNoteToDay}} of {{curMonthName}}</h4> -->
                     <div class="notes bg-default">
                         <ul class="list-unstyled">
                             <li ng-repeat="item in month[addNoteToDay - 1].note">{{item}}</li>
@@ -92,7 +84,7 @@
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Enter note" ng-model="note">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" ng-click="saveNote(addNoteToDay, curMonthName, curYear, note)">+</button>
+                        <button class="btn btn-default" type="button" ng-click="saveNote(addNoteToDay, curMonthName, curYear, note)"><i class="fa fa-calendar-plus-o season-color"></i></button>
                       </span>
                     </div>
                 </div>

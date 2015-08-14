@@ -12,4 +12,6 @@ calendar.controller('mainCalendarController', function($scope) {
         $scope.toDoList.push(newnote);
         console.log($scope.toDoList);
     });
+
+    $scope.curMonthName = "";
 });

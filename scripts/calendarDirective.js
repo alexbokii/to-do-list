@@ -3,7 +3,8 @@ calendar.directive('myCalendar', function(generalService) {
         restrict: "EA",
         templateUrl: 'calendar.tpl.html',
         scope: {
-            toDoList: '='
+            toDoList: '=',
+            curMonthName: '='
         },
         link: function(scope, el, attr) {
 
@@ -12,7 +13,8 @@ calendar.directive('myCalendar', function(generalService) {
             scope.curMonthName = generalService.getCurrentMonth(scope.curMonthNum);
             scope.curYear = today.getFullYear();
             scope.dayToday = generalService.getCurrentDay(today);
-            // scope.addNoteToDay = scope.dayToday;
+            // scope.weekdayToday = scope.dayToday;
+            scope.addNoteToDay = scope.dayToday;
 
             scope.month = initializeMonth(scope.curMonthNum, scope.curYear);
             scope.monthWithExtraDays = scope.month;
@@ -108,7 +110,7 @@ calendar.directive('myCalendar', function(generalService) {
                 var daysToNextMonth;
                 var nextMonth;
 
-                if (scope.month[scope.month.length - 1].weekdayNum != 7) {
+                if (scope.month[scope.month.length - 1].weekdayNum != 0) {
                     daysToNextMonth = 7 - scope.month[scope.month.length - 1].weekdayNum;
                 }
 
@@ -136,12 +138,10 @@ calendar.directive('myCalendar', function(generalService) {
 
             // scope functions
             scope.addNote = function(day) {
-                scope.visible = true;
                 scope.addNoteToDay = day;
             };
 
             scope.saveNote = function(day, mon, year, note) {
-                scope.visible = false;
                 scope.$emit('addNote', day, mon, year, note);
                 scope.note = '';
             

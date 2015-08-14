@@ -1,52 +1,81 @@
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
 body {
     color: #fff;
-    background-color: #333;
     font-family: 'Didact Gothic', sans-serif;
+    background: rgba(0,0,0,0.7);
+    min-height: 100%;
 }
 
 h1.lg {
-    font-size: 173px;
+    font-size: 100px;
+}
+
+h3 {
+    margin-top: 5px;
+}
+
+h4 {
+     padding-bottom: 3px;
 }
 
 .cal {
     width: 100%;
-    background-color: #336699;
     margin-top: 100px;
     border: 20px solid #336699;
     position: relative;
 }
 
-.bg-default {
-    background-color: #fff;
-    color: #336699;
+.label-primary {
+    background-color: rgba(162, 139, 132, .3);
+}
+
+.text-muted .label {
+    color: #777;
 }
 
 .bg-dark {
     background-color: #333;
 }
 
-.bg-primary {
-    background-color: #336699;
-}
-
 .padding-30 {
     padding: 30px;
+}
+ 
+.day-area {
+    height: 310px;
+}
+
+.month-area {
+    height: 315px;
+}
+
+ul {
+    margin-bottom: 0px;
 }
 
 .notes li {
     line-height: 2em;
     font-size: 1.7em;
-    border-bottom: 1px solid rgba(51, 102, 153, 0.4);
+    border-bottom: 1px solid rgba(71, 71, 71, 0.42);
     padding-left: 20px;
 }
 
 .form-control {
     font-size: 1.6em;
     border-radius: 0px;
+    height: 2em;
 }
 
 .input-group button {
     border-radius: 0px;
+}
+
+.input-group button i {
+    font-size: 30px;
 }
 
 .absolute-panel {
@@ -68,16 +97,87 @@ i.note-dot {
 }
 
 .shadow {
-    box-shadow: 1px 1px 1px 1px #3F415D;
+    box-shadow: 1px 1px 1px 1px rgba(71, 71, 71, 0.42);
+    min-height: 300px;
 }
 
 .day {
     width: 14%;
     float: left;
     text-align: center;
+    cursor: pointer;
+}
+
+.marked {
+    background: linear-gradient(to bottom right, white -15px, rgba(51, 51, 51, 0) 15px);
+    background: -moz-linear-gradient(to bottom right, white -15px, rgba(51, 51, 51, 0) 15px);
+    background: -webkit-linear-gradient(to bottom right, white -15px, rgba(51, 51, 51, 0) 15px);
 }
 
 .arrow {
     cursor: pointer;
     margin-top: -32px;
+}
+
+.underline {
+    border-bottom: 1px solid white;
+}
+
+/* season classes */
+.summer {
+    background: url(img/summer.jpg) no-repeat left top;
+}
+
+.fall {
+    background-image: url(img/fall.jpg);
+}
+
+.winter {
+    background-image: url(img/winter.jpg);
+}
+
+.spring {
+    background-image: url(img/spring.jpg);
+    background-size: 100% auto;
+}
+
+
+.summer .cal {
+    background-color: #E36847;
+    border-color: #E36847;
+}
+
+.summer .season-color {
+    color: #E36847;
+}
+
+.fall .cal {
+    background-color: #C12000;
+    border-color: #C12000;
+}
+
+.fall .season-color {
+    color: #C12000;
+}
+
+.winter .cal {
+    background-color: #36456E;
+    border-color: #36456E;
+}
+
+.winter .season-color {
+    color: #36456E;
+}
+
+.spring .cal {
+    background-color: #79BAD8;
+    border-color: #79BAD8;
+}
+
+.spring .season-color {
+    color: #79BAD8;
+}
+
+.day-area {
+    background-color: #fff;
 }

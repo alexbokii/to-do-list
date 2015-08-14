@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="calendar">
+<html ng-app="calendar" ng-controller="mainCalendarController" ng-class="{'summer': curMonthName == 'July' || curMonthName == 'August' || curMonthName == 'June', 'fall': curMonthName == 'September' || curMonthName == 'October' || curMonthName == 'November', 'winter': curMonthName == 'December' || curMonthName == 'January' || curMonthName == 'February', 'spring': curMonthName == 'March' || curMonthName == 'April' || curMonthName == 'May'}">
 <head>
     <title>Calendar</title>
     <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
@@ -15,11 +15,11 @@
     <script type="text/javascript" src="scripts/filters.js"></script>
 </head>
 
-<body ng-controller="mainCalendarController">
+<body>
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <my-calendar to-do-list="toDoList"></my-calendar>
+                <my-calendar to-do-list="toDoList" cur-month-name="curMonthName"></my-calendar>
             </div>
         </div>
     </div>
